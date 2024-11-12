@@ -1,0 +1,74 @@
+CREATE DATABASE APIWithDB;
+USE APIWithDB;
+
+CREATE TABLE StudentDetails
+(
+	Id INT IDENTITY(1,1) CONSTRAINT PK_StudentDetails_Id PRIMARY KEY,
+	Name VARCHAR(101) NOT NULL,
+	Email VARCHAR(101) CONSTRAINT UK_StudentDetails_Email UNIQUE NOT NULL,
+	MobileNo BIGINT CONSTRAINT UK_StudentDetails_MobileNo UNIQUE NOT NULL,
+	Password VARCHAR(101) NOT NULL,
+	Gender VARCHAR(101) NOT NULL,
+	SchoolName VARCHAR(101) NOT NULL,
+	Address VARCHAR(101) NOT NULL,
+	Country VARCHAR(101) NOT NULL,
+	State VARCHAR(101) NOT NULL,
+)
+
+SELECT *FROM StudentDetails
+
+CREATE PROC InsertData
+@Name VARCHAR(101),
+@Email VARCHAR(101),
+@MobileNo BIGINT,
+@Password VARCHAR(101),
+@Gender VARCHAR(101),
+@SchoolName VARCHAR(101),
+@Address VARCHAR(101),
+@Country VARCHAR(101),
+@State VARCHAR(101)
+AS
+BEGIN 
+	INSERT INTO StudentDetails (Name, Email, MobileNo, Password, Gender, SchoolName, Address, Country, State) VALUES (@Name, @Email, @MobileNo, @Password, @Gender, @SchoolName, @Address, @Country, @State);
+END 
+
+CREATE PROC DeleteData
+@Id INT
+AS
+BEGIN 
+	DELETE FROM StudentDetails WHERE Id = @Id;
+END 
+
+CREATE PROC GetData
+
+AS
+BEGIN 
+	SELECT *FROM StudentDetails 
+END 
+
+EXEC GetData
+-- -----
+
+CREATE PROC GetBYIdData
+@Id INT
+AS
+BEGIN 
+	SELECT *FROM StudentDetails WHERE Id = @Id;
+END 
+
+-- ----------------------------------------------------
+CREATE PROC EditData
+@Id INT,
+@Name VARCHAR(101),
+@Email VARCHAR(101),
+@MobileNo BIGINT,
+@Password VARCHAR(101),
+@Gender VARCHAR(101),
+@SchoolName VARCHAR(101),
+@Address VARCHAR(101),
+@Country VARCHAR(101),
+@State VARCHAR(101)
+AS
+BEGIN 
+	UPDATE StudentDetails SET Name =@Name, Email = @Email, MobileNo = @MobileNo, Password =@Password, Gender = @Gender, SchoolName = @SchoolName, Address = @Address, Country = @Country, State = @State WHERE Id = @Id;
+END 
